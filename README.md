@@ -59,7 +59,7 @@ try {
   e.printStackTrace();
 } 
 ```
-#Siren JSON Output
+## Siren JSON Output
 The code above will print out the following JSON. Which is syntatically identical to that [on Kenin's site](https://github.com/kevinswiber/siren)
 
 
