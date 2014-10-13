@@ -29,26 +29,26 @@ entity.addProperty("orderNumber", 42)
   // Add Sub entity for Customer
   .addSubEntity(new SubEntity(new String[] {"info", "customer"}, new String[] {"http://x.io/rels/customer"})
     
-    // Add Customer properties
-    .addProperty("customerId", "pj123")
-    .addProperty("name", "Peter Joseph")
-    
-    // Add 'self' link for Customer
-    .add(new Link("http://api.x.io/customers/pj123")));
+  // Add Customer properties
+  .addProperty("customerId", "pj123")
+  .addProperty("name", "Peter Joseph")
+  
+  // Add 'self' link for Customer
+  .add(new Link("http://api.x.io/customers/pj123")));
   
 // Create action link entity and fields
 ActionLink action = new ActionLink("add-item", "Add Item", "http://api.x.io/orders/42/items", HttpMethod.POST);
 action.setFormType("application/x-www-form-urlencoded")
-.addDataField(new LinkDataField("orderNumber", InputTypes.HIDDEN, "42"))
-.addDataField(new LinkDataField("productCode", InputTypes.TEXT))
-.addDataField(new LinkDataField("quantity", InputTypes.NUMBER));
+  .addDataField(new LinkDataField("orderNumber", InputTypes.HIDDEN, "42"))
+  .addDataField(new LinkDataField("productCode", InputTypes.TEXT))
+  .addDataField(new LinkDataField("quantity", InputTypes.NUMBER));
 
 // Add action to parent entity.
 entity.add(action);
 
 // Add the 'next' and 'previous' links
 entity.add(new Link(new String[] {"previous"}, "http://api.x.io/orders/41"))
-.add(new Link(new String[] {"next"}, "http://api.x.io/orders/43"));
+  .add(new Link(new String[] {"next"}, "http://api.x.io/orders/43"));
 
 
 // Output the JSON String
@@ -57,7 +57,7 @@ try {
   System.out.println(mapper.writeValueAsString(entity));
 } catch (Exception e) {
   e.printStackTrace();
-}
+} 
 ```
 #Siren JSON Output
 The code above will print out the following JSON. Which is syntatically identical to that [on Kenin's site](https://github.com/kevinswiber/siren)
