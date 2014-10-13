@@ -8,7 +8,7 @@ You can contact me at [adam@jeeni.co.uk](mailto:adam@jeeni.co.uk?Subject=SirenJe
 
 ## SirenJeeni Example
 
-The following Java code uses a set of classes to construct the Siren JSON found at Kevin Swiber's [github Siren Site](https://github.com/kevinswiber/siren)
+The following Java code uses a set of classes to construct the Siren JSON found at [Kevin Swiber's github Siren Site](https://github.com/kevinswiber/siren).
 
 I'll give a fuller description in time, but it sould be easy to follow.
 
