@@ -4,7 +4,7 @@ __Current version: 0.3.1__
 
 Please bear with me for a couple of week while I get this repo setup and aligned. 
 
-You can contact me at [adam@Jeeni.co.uk](mailto:adam@jeeni.co.uk)
+You can contact me at [adam@jeeni.co.uk](mailto:adam@jeeni.co.uk?Subject=SirenJeeni)
 
 ## SirenJeeni Example
 
