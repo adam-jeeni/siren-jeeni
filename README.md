@@ -28,11 +28,9 @@ entity.addProperty("orderNumber", 42)
   
   // Add Sub entity for Customer
   .addSubEntity(new SubEntity(new String[] {"info", "customer"}, new String[] {"http://x.io/rels/customer"})
-    
   // Add Customer properties
   .addProperty("customerId", "pj123")
   .addProperty("name", "Peter Joseph")
-  
   // Add 'self' link for Customer
   .add(new Link("http://api.x.io/customers/pj123")));
   
@@ -45,11 +43,9 @@ action.setFormType("application/x-www-form-urlencoded")
 
 // Add action to parent entity.
 entity.add(action);
-
 // Add the 'next' and 'previous' links
 entity.add(new Link(new String[] {"previous"}, "http://api.x.io/orders/41"))
   .add(new Link(new String[] {"next"}, "http://api.x.io/orders/43"));
-
 
 // Output the JSON String
 ObjectMapper mapper = new ObjectMapper();
