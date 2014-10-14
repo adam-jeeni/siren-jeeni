@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="searchResultApp">
+	<head>
+	 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+	 <script src="js/controllers.js"></script>
+	 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	
+	<body ng-controller="ResultListCtrl">
+		<h1>Search Results</h1>
+		<p>Found {{results.properties['size']}} in {{results.properties['timeSecs']}} seconds</p>
+		
+		<div ng-repeat="entity in results.entities">
+			<div>
+				<h3>
+					<div ng-repeat="links in entity.entities[0].links">
+					  <a ng-if="links.rel[0] == 'self'" href="{{links.href}}">{{entity.entities[0].properties['longDescription']}}  £56.98</a>
+					</div>
+				</h3>
+				<h4>SKU: {{entity.entities[0].properties['sku']}}</h4>
+				<div>{{entity.entities[0].properties['searchDescription']}}</div>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>
