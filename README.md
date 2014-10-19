@@ -2,7 +2,7 @@
 
 __Current version: 0.5.1__
 
-## What's the Pont of Siren-Jeeni
+## What's the Point of Siren-Jeeni
 Siren-Jeeni is an enabler that will allow companies who build systems in Java to expose them as Siren Hypermedia APIs. This means companies like Screwfix, Tesco and others can expose their core functionality as API services and open these up to the world. A bit like Google, eBay and Amazon have done.
 
 With this, developers will be able to use those APIs to create new apps for custom markets or new technologies such as Google Glass.
