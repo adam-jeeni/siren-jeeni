@@ -52,6 +52,7 @@ public class SwiberTest {
 		// Add action to parent entity.
 		entity.addAction(actionLink);
 		
+		// Build and check all links
 		entity.buildUrls();
 		
 		// Output the JSON String
