@@ -9,24 +9,28 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonPropertyOrder({ "rel", "href" })
 public class Link {
 
-	private String[] rel;
+	private final String[] rel;
+	private final String strHRef;
 	private URL href;
 	
 	public Link(String[] rel, String href) {
 		super();
 		this.rel = rel;
-		this.href = SirenUtils.checkURL(href);
+		this.strHRef = href;
 	}
 	
 	public Link(String selfHref) {
 		this(new String[] {"self"}, selfHref);
 	}
-
 	public final String[] getRel() {
 		return rel;
 	}
 
 	public final URL getHref() {
 		return href;
+	}
+	
+	void buildUrl(String domain){
+		href = UrlUtils.toUrl(domain, strHRef);
 	}
 }

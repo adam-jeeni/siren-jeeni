@@ -3,7 +3,7 @@ package uk.co.jeeni.siren;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class SirenUtils {
+public class UrlUtils {
 	public static URL checkURL(String strUrl) throws SirenExcepton {
 		try {
 			return new URL(strUrl);
@@ -22,20 +22,26 @@ public class SirenUtils {
 	 * 
 	 * <pre>
 	 * {@code
-	 * 	combineDomainAndPath("http://www.jeeni.co.uk/", "/world");
-	 * 	combineDomainAndPath("http://www.jeeni.co.uk/", "world");
-	 *  combineDomainAndPath("http://www.jeeni.co.uk", "/world");
-	 *  combineDomainAndPath("http://www.jeeni.co.uk", "world");
+	 * 	toUrl("http://www.jeeni.co.uk/", "/world");
+	 * 	toUrl("http://www.jeeni.co.uk/", "world");
+	 *  toUrl("http://www.jeeni.co.uk", "/world");
+	 *  toUrl("http://www.jeeni.co.uk", "world");
+	 *  toUrl("http://www.jeeni.co.uk", "http://www.jeeni.co.uk/other");
 	 * }
 	 * </pre>
-	 * 
-	 * 
 	 * 
 	 * @param domain
 	 * @param path
 	 * @return
 	 */
-	public static URL combineDomainAndPath(String domain, String path) {
+	public static URL toUrl(String domain, String path) {
+		if(isUrl(path)){
+			try {
+				return new URL(path);
+			} catch (MalformedURLException e) {
+				// Can not happen because of previous check.
+			}
+		}
 		if (domain.endsWith("/") && path.startsWith("/")) {
 			domain = domain.substring(0, domain.length() - 1);
 			return checkURL(domain + path);
@@ -45,6 +51,28 @@ public class SirenUtils {
 			return checkURL(domain + path);
 		} else {
 			return checkURL(domain + "/" + path);
+		} 
+	}
+	
+	public static URL[] buildUrls(String domain, String[] paths){
+		if(paths == null || paths.length == 0){
+			return new URL[0];
+		}
+		
+		URL[] urls = new URL[paths.length];
+		
+		for(int i = 0; i < paths.length; i++){
+			urls[i] = UrlUtils.toUrl(domain, paths[i]);
+		}
+		return urls;
+	}
+	
+	public static boolean isUrl(String maybeUrl){
+		try {
+			new URL(maybeUrl);
+			return true;
+		} catch (MalformedURLException e) {
+			return false;
 		}
 	}
 

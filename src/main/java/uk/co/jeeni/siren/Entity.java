@@ -14,24 +14,30 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Entity implements ISirenEntity {
 
 	@JsonProperty("class")
-	private String[] classes;
+	private final String[] classes;
 	private Properties properties = new Properties();
-	private ISirenEntity[] entities;
+//	private ISirenEntity[] entities;
+	private SubEntity[] entities;
 	private ActionLink[] actions;
 	private Link[] links;
 	
+	protected String domain;
+	
 	public Entity(String[] classes, String selfUrl){
 		this.classes = classes;
-		this.add(new Link(selfUrl));
+		this.addLink(new Link(selfUrl));
+		this.domain = null;
 	}
 	
-//	public Entity(String[] classes, String baseUrl, String relativeSelfUrl){
-//		this.classes = classes;
-//		this.add(new Link(selfUrl));
-//	}
+	public Entity(String[] classes, String domain, String relativeSelfUrl){
+		this.classes = classes;
+		this.domain = domain;
+		this.addLink(new Link(relativeSelfUrl));
+	}
 	
 	protected Entity(String[] classes){
 		this.classes = classes;
+		this.domain = null;
 	}
 	
 	public Entity addProperty(String name, Object value){
@@ -42,23 +48,26 @@ public class Entity implements ISirenEntity {
 		return this;
 	}
 	
-	public Entity addLinkToSubEntity(LinkToSubEntity entity){
+//	public Entity addLinkToSubEntity(LinkToSubEntity entity){
+//		if(entity != null){
+//			final Set<ISirenEntity> links = addItem(entity, entities);
+//			entities = links.toArray(new ISirenEntity[links.size()]);
+//		}
+//		return this;
+//	}
+
+	public Entity addSubEntity(SubEntity entity){
 		if(entity != null){
-			final Set<ISirenEntity> links = addItem(entity, entities);
-			entities = links.toArray(new ISirenEntity[links.size()]);
-		}
-		return this;
-	}
-	
-	public Entity addSubEntity(Entity entity){
-		if(entity != null){
-			final Set<ISirenEntity> links = addItem(entity, entities);
-			entities = links.toArray(new ISirenEntity[links.size()]);
+			if(this.domain != null){
+				entity.buildUrls(domain);
+			}
+			final Set<SubEntity> links = addItem(entity, entities);
+			entities = links.toArray(new SubEntity[links.size()]);
 		}
 		return this;
 	}
 
-	public Entity add(Link link){
+	public Entity addLink(Link link){
 		if(link != null){
 			final Set<Link> linkSet = addItem(link, links);
 			links = linkSet.toArray(new Link[linkSet.size()]);
@@ -66,7 +75,7 @@ public class Entity implements ISirenEntity {
 		return this;
 	}
 	
-	public Entity add(ActionLink link){
+	public Entity addAction(ActionLink link){
 		if(link != null){
 			final Set<ActionLink> links = addItem(link, actions);
 			actions = links.toArray(new ActionLink[links.size()]);
@@ -104,8 +113,34 @@ public class Entity implements ISirenEntity {
 	public final ActionLink[] getActions() {
 		return actions;
 	}
-
-	public final void setLinks(Link[] links) {
-		this.links = links;
+	
+	public final void buildUrls(){
+		buildSubEntityUrls(domain);
+		buildLinkUrls(domain);
+		buildActionUrls(domain);
 	}
+	
+	final void buildSubEntityUrls(String domain){
+		if(entities != null){
+			for(SubEntity subEntity : entities){
+				subEntity.buildUrls(domain);
+			}
+		}
+	}
+	final void buildLinkUrls(String domain){
+		if(links != null && links.length > 0){
+			for(Link link : links){
+				link.buildUrl(domain);
+			}
+		}
+	}
+	
+	final void buildActionUrls(String domain){
+		if(actions != null && actions.length > 0){
+			for(ActionLink actionLink : actions){
+				actionLink.buildUrls(domain);
+			}
+		}
+	}
+
 }
