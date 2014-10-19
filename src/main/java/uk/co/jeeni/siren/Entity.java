@@ -25,6 +25,11 @@ public class Entity implements ISirenEntity {
 		this.add(new Link(selfUrl));
 	}
 	
+//	public Entity(String[] classes, String baseUrl, String relativeSelfUrl){
+//		this.classes = classes;
+//		this.add(new Link(selfUrl));
+//	}
+	
 	protected Entity(String[] classes){
 		this.classes = classes;
 	}

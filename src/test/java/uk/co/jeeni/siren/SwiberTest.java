@@ -11,7 +11,7 @@ public class SwiberTest {
 	 * @see https://github.com/kevinswiber/siren
 	 */
 	@Test
-	public void testCreatkevinswiberExample(){
+	public void creatkevinswiberExampleTest(){
 		
 		// Create the parent 'Order' entity
 		final Entity entity = new Entity(new String[] {"order"}, "http://api.x.io/orders/42");
