@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.co.jeeni</groupId>
-    <artifactId>siren-jeeni</artifactId>
-    <version>1.0.0</version>
-    <packaging>jar</packaging>
+	<groupId>uk.co.jeeni</groupId>
+	<artifactId>siren-jeeni</artifactId>
+	<version>0.5.1</version>
+	<packaging>jar</packaging>
 
-    <name>Siren Jeeni</name>
+	<name>Siren Jeeni</name>
 
-    <properties>
-        <spring.version>4.0.0.RELEASE</spring.version>
-    </properties>
+	<properties>
+		<jackson.version>1.9.12</jackson.version>
+		<junit.version>4.11</junit.version>
+	</properties>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
+		<!-- Jackson mapper is used to convert Java POJOs to JSON strings. -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
-        <!--
-          Jackson mapper is used to convert
-          Java POJOs to JSON strings.
-        -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.12</version>
-        </dependency>
 
-    </dependencies>
-
-    
-
+	</dependencies>
 </project>
