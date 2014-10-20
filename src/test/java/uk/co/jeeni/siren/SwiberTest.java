@@ -70,7 +70,7 @@ public class SwiberTest {
 	 * 
 	 * @see https://github.com/kevinswiber/siren
 	 */
-//	@Test
+	@Test
 	public void creatKevinSwiberExampleTest(){
 		
 		// Create the parent 'Order' entity
@@ -82,18 +82,19 @@ public class SwiberTest {
 			.addProperty("status", "pending")
 			
 			// Add Sub entity for Collection
-			.addSubEntity(new SubEntity(new String[] {"items", "collection"}, "http://api.x.io/orders/42/items", new String[] {"http://x.io/rels/order-items"}))
+			.addSubEntity(new SubEntity(new String[] {"items", "collection"}, "http://api.x.io/orders/42/items", new String[] {"http://x.io/rels/order-items"}));
 			
 			// Add Sub entity for Customer
-			.addSubEntity(new SubEntity(new String[] {"info", "customer"}, new String[] {"http://x.io/rels/customer"}))
-				
-				// Add Customer properties
-				.addProperty("customerId", "pj123")
+		SubEntity customerInfo = new SubEntity(new String[] {"info", "customer"}, new String[] {"http://x.io/rels/customer"});
+		// Add Customer properties
+		customerInfo.addProperty("customerId", "pj123")
 				.addProperty("name", "Peter Joseph")
-				
 				// Add 'self' link for Customer
 				.addLink(new Link("http://api.x.io/customers/pj123"));
 			
+		// Add Sub entity for Customer
+		entity.addSubEntity(customerInfo);
+				
 		// Create action link entity and fields
 		ActionLink action = new ActionLink("add-item", "Add Item", "http://api.x.io/orders/42/items", HttpMethod.POST);
 		action.setFormType("application/x-www-form-urlencoded")
@@ -108,6 +109,8 @@ public class SwiberTest {
 		entity.addLink(new Link(new String[] {"previous"}, "http://api.x.io/orders/41"))
 		.addLink(new Link(new String[] {"next"}, "http://api.x.io/orders/43"));
 		
+		// Build and check all links
+		entity.buildUrls();
 		
 		// Output the JSON String
 		ObjectMapper mapper = new ObjectMapper();
