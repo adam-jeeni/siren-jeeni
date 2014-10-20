@@ -26,9 +26,21 @@ You can contact me at [adam@jeeni.co.uk](mailto:adam@jeeni.co.uk?Subject=SirenJe
 
 The following Java code uses a set of classes to construct the Siren JSON found at [Kevin Swiber's github Siren Site](https://github.com/kevinswiber/siren).
 
-I'll give a fuller description in time, but it sould be easy to follow.
+Note that on the first line:
+```Java
+  final Entity entity = new Entity(new String[] {"order"}, "http://api.x.io/", "/orders/42");
+```
+The second parameter `"http://api.x.io/"`, sets the domain that will be used with all subsequent relative links. This helps avoid mistakes and repetition. 
 
-It uses the Java Fluent style of coding.
+However, if you use a full URL structure in a link then that will be used as entered. In other words this allows you to reference links in different domains. 
+
+Also note the final line before generating the JSON:
+```Java
+  entity.buildUrls();
+```
+This line is absolutely required as it builds all the URL object internally and thus ensures they are correctly formatted etc.
+
+I've also tried to use the Java Fluent style of coding where possible.
 
 ```Java
 // Create the parent 'Order' entity. 
