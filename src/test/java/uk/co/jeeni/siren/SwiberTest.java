@@ -15,7 +15,8 @@ public class SwiberTest {
 	@Test
 	public void creatKevinSwiberExampleUsingBaseDomainTest(){
 		
-		// Create the parent 'Order' entity
+		// Create the parent 'Order' entity. 
+		//Note the domain "http://api.x.io/" is uses so all other URL references can be relative.
 		final Entity entity = new Entity(new String[] {"order"}, "http://api.x.io/", "/orders/42");
 		
 		// Create parent entity properties
