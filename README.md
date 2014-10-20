@@ -81,7 +81,7 @@ It uses the Java Fluent style of coding.
 		} 
 ```
 ## Siren JSON Output
-The code above will print out the following JSON. Which is syntatically identical to that [on Kenin's site](https://github.com/kevinswiber/siren)
+The code above will print out the following JSON. Which is syntatically identical to that [on Kevin's site](https://github.com/kevinswiber/siren)
 
 
 ```json
