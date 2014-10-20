@@ -31,45 +31,54 @@ I'll give a fuller description in time, but it sould be easy to follow.
 It uses the Java Fluent style of coding.
 
 ```Java
-// Create the parent 'Order' entity
-final Entity entity = new Entity(new String[] {"order"}, "http://api.x.io/orders/42");
-
-// Create parent entity properties
-entity.addProperty("orderNumber", 42)
-  .addProperty("itemCount", 3)
-  .addProperty("status", "pending")
-  
-  // Add Sub entity for Collection
-  .addSubEntity(new SubEntity(new String[] {"items", "collection"}, "http://api.x.io/orders/42/items", new String[] {"http://x.io/rels/order-items"}))
-  
-  // Add Sub entity for Customer
-  .addSubEntity(new SubEntity(new String[] {"info", "customer"}, new String[] {"http://x.io/rels/customer"})
-  // Add Customer properties
-  .addProperty("customerId", "pj123")
-  .addProperty("name", "Peter Joseph")
-  // Add 'self' link for Customer
-  .add(new Link("http://api.x.io/customers/pj123")));
-  
-// Create action link entity and fields
-ActionLink action = new ActionLink("add-item", "Add Item", "http://api.x.io/orders/42/items", HttpMethod.POST);
-action.setFormType("application/x-www-form-urlencoded")
-  .addDataField(new LinkDataField("orderNumber", InputTypes.HIDDEN, "42"))
-  .addDataField(new LinkDataField("productCode", InputTypes.TEXT))
-  .addDataField(new LinkDataField("quantity", InputTypes.NUMBER));
-
-// Add action to parent entity.
-entity.add(action);
-// Add the 'next' and 'previous' links
-entity.add(new Link(new String[] {"previous"}, "http://api.x.io/orders/41"))
-  .add(new Link(new String[] {"next"}, "http://api.x.io/orders/43"));
-
-// Output the JSON String
-ObjectMapper mapper = new ObjectMapper();
-try {
-  System.out.println(mapper.writeValueAsString(entity));
-} catch (Exception e) {
-  e.printStackTrace();
-} 
+		// Create the parent 'Order' entity. 
+		//Note the domain "http://api.x.io/" is uses so all other URL references can be relative.
+		final Entity entity = new Entity(new String[] {"order"}, "http://api.x.io/", "/orders/42");
+		
+		// Create parent entity properties
+		entity.addProperty("orderNumber", 42)
+			.addProperty("itemCount", 3)
+			.addProperty("status", "pending")
+			// Add Sub entity for Collection
+			.addSubEntity(new SubEntity(new String[] {"items", "collection"}, "/orders/42/items", new String[] {"/rels/order-items"}));
+			
+		// Add the 'next' and 'previous' links
+		entity.addLink(new Link(new String[] {"previous"}, "/orders/41"))
+		.addLink(new Link(new String[] {"next"}, "/orders/43"));
+		
+		
+		// THIS ENTITY DOES NOT KNOW ABOUT THE PARENT DOMAIN
+		/* The CustomerInfo Entity */
+		SubEntity customerInfo = new SubEntity(new String[] {"info", "customer"}, new String[] {"rels/customer"});
+			// Add Customer properties
+		customerInfo.addProperty("customerId", "pj123")
+			.addProperty("name", "Peter Joseph")
+			// Add 'self' link for Customer
+			.addLink(new Link("customers/pj123"));
+		
+		// Add Sub entity for Customer
+		entity.addSubEntity(customerInfo);
+		
+		// Create action link entity and fields
+		ActionLink actionLink = new ActionLink("add-item", "Add Item", "orders/42/items", HttpMethod.POST);
+		actionLink.setFormType("application/x-www-form-urlencoded")
+		.addDataField(new DataField("orderNumber", InputTypes.HIDDEN, "42"))
+		.addDataField(new DataField("productCode", InputTypes.TEXT))
+		.addDataField(new DataField("quantity", InputTypes.NUMBER));
+		
+		// Add action to parent entity.
+		entity.addAction(actionLink);
+		
+		// Build and check all links
+		entity.buildUrls();
+		
+		// Output the JSON String
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			System.out.println(mapper.writeValueAsString(entity));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 ```
 ## Siren JSON Output
 The code above will print out the following JSON. Which is syntatically identical to that [on Kenin's site](https://github.com/kevinswiber/siren)
@@ -77,9 +86,7 @@ The code above will print out the following JSON. Which is syntatically identica
 
 ```json
 {
-    "class": [
-        "order"
-    ],
+    "class": ["order"],
     "properties": {
         "orderNumber": 42,
         "status": "pending",
@@ -87,34 +94,19 @@ The code above will print out the following JSON. Which is syntatically identica
     },
     "entities": [
         {
-            "class": [
-                "items",
-                "collection"
-            ],
-            "rel": [
-                "http://x.io/rels/order-items"
-            ],
+            "class": ["items", "collection"],
+            "rel": ["http://api.x.io/rels/order-items"],
             "href": "http://api.x.io/orders/42/items"
         },
         {
-            "class": [
-                "info",
-                "customer"
-            ],
-            "rel": [
-                "http://x.io/rels/customer"
-            ],
+            "class": ["info", "customer"],
+            "rel": ["http://api.x.io/rels/customer"],
             "properties": {
                 "name": "Peter Joseph",
                 "customerId": "pj123"
             },
             "links": [
-                {
-                    "rel": [
-                        "self"
-                    ],
-                    "href": "http://api.x.io/customers/pj123"
-                }
+                {"rel": ["self"],"href": "http://api.x.io/customers/pj123"}
             ]
         }
     ],
@@ -122,45 +114,20 @@ The code above will print out the following JSON. Which is syntatically identica
         {
             "name": "add-item",
             "title": "Add Item",
-            "method": "POST",
             "href": "http://api.x.io/orders/42/items",
+            "method": "POST",
             "type": "application/x-www-form-urlencoded",
             "fields": [
-                {
-                    "name": "orderNumber",
-                    "type": "HIDDEN",
-                    "value": "42"
-                },
-                {
-                    "name": "quantity",
-                    "type": "NUMBER"
-                },
-                {
-                    "name": "productCode",
-                    "type": "TEXT"
-                }
+                { "name": "productCode", "type": "TEXT" },
+                { "name": "orderNumber", "type": "HIDDEN", "value": "42"},
+                { "name": "quantity", "type": "NUMBER" }
             ]
         }
     ],
     "links": [
-        {
-            "rel": [
-                "self"
-            ],
-            "href": "http://api.x.io/orders/42"
-        },
-        {
-            "rel": [
-                "previous"
-            ],
-            "href": "http://api.x.io/orders/41"
-        },
-        {
-            "rel": [
-                "next"
-            ],
-            "href": "http://api.x.io/orders/43"
-        }
+        { "rel": ["previous"], "href": "http://api.x.io/orders/41" },
+        { "rel": ["self"], "href": "http://api.x.io/orders/42"},
+        { "rel": ["next" ], "href": "http://api.x.io/orders/43"}
     ]
 }
 ```
