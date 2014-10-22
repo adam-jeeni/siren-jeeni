@@ -3,22 +3,13 @@
 __Current version: 0.5.1__
 
 ## What's the Point of Siren-Jeeni
-Siren-Jeeni is an enabler that will allow companies who build systems in Java to expose them as Siren Hypermedia APIs. This means companies like Screwfix, Tesco and others can expose their core functionality as API services and open these up to the world. A bit like Google, eBay and Amazon have done.
+Siren-Jeeni is an enabler that will allow companies who build systems in Java to expose them as Siren Hypermedia APIs. This means companies who have a Java based IT strategy can expose their core functionality as API services and open these up to the world. A bit like Google, eBay and Amazon have done.
 
 With this, developers will be able to use those APIs to create new apps for custom markets or new technologies such as Google Glass.
 
-Imagine wearing Google Glasses and looking at products on the shelf at your local supermarket and seeing the price of the same product at all your other favourite shopping places. Or integrating Screwfix's ordering API into your company's purchasing software.
-
-This is what Siren-Jeeni will enable you to do.A good question that many have asked (Mark Rees), and deserves an answer...
-
-Siren-Jeeni is an enabler that will allow companies who build systems in Java to expose them as Siren Hypermedia APIs. This means companies like Screwfix, Tesco and others can expose their core functionality as API services and open these up to the world. A bit like Google, eBay and Amazon have done.
-
-With this, developers will be able to use those APIs to create new apps for custom markets or new technologies such as Google Glass.
-
-Imagine wearing Google Glasses and looking at products on the shelf at your local supermarket and seeing the price of the same product at all your other favourite shopping places. Or integrating Screwfix's ordering API into your company's purchasing software.
+Imagine wearing Google Glasses and looking at products on the shelf at your local supermarket and seeing the price of the same product at all your other favourite shopping places. Or integrating your key supplier's ordering API into your company's purchasing software.
 
 This is what Siren-Jeeni will enable you to do.
-
 
 You can contact me at [adam@jeeni.co.uk](mailto:adam@jeeni.co.uk?Subject=SirenJeeni)
 
